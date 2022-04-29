@@ -2,6 +2,8 @@ import os
 from flask import Flask
 import logging 
 from .config import config 
+# Set up extensions 
+from app.models import db as mongo_db 
 
 def create_app(config_name):
     """Create a new app instances"""
@@ -10,6 +12,9 @@ def create_app(config_name):
     app_created = Flask(__name__)
     app_created.config.from_object(config[config_name])
     config[config_name].init_app(app_created)
+
+    ## Init database 
+    mongo_db.init_app(app_created)
 
     return app_created
 

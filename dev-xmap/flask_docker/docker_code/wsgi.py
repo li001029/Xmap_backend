@@ -3,7 +3,7 @@ from flask import jsonify
 
 @application.route("/")
 def hello():
-  return "Hello World!"
+  return "Hello X-Map!"
   
 if __name__ == "__main__":
     application.run()
