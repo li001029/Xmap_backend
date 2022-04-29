@@ -9,8 +9,7 @@ We utilize dockerizing Flask with MongoDB, Gunicorn, and Nginx:
 * `MongoDB` for our database
 * `docker` emcompasses everything.
 
-
-
+This repository contains a Dockerfile that allows to build a docker container that comes with all necessary tools pre-installed
 
 
 
