@@ -1,4 +1,5 @@
 import os 
+import datetime
 
 class BasicConfig(object):
     """Base config"""
@@ -12,6 +13,10 @@ class BasicConfig(object):
     ## Set MongoDB config 
     DB_URI = os.environ["DB_URL"]
     MONGODB_HOST = DB_URI
+
+    ## Set JWT config 
+    JWT_SECRET_KEY = os.environ.get('SECRET')
+    JWT_ACCESS_TOKEN_EXPIRES = datetime.timedelta(days=1)
 
     @staticmethod
     def init_app(app):
