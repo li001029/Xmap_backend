@@ -13,24 +13,26 @@ services:
       FLASK_ENV: "development" # Setting to "development" enables Flask debugger.
       APP_DEBUG: "true"
       APP_PORT: 5001
-      DB_URL: "mongodb://admin:secret@127.0.0.1:27017/xmapdb"
+      # DB_URL: "mongodb+srv://admin:xmap-secret@cluster0.wddj4.mongodb.net/xmapdb?retryWrites=true&w=majority"
+      DB_URL: "mongodb://mongodb:27017/xmapdb"
       SECRET: "xmap-secret" #testing only - don't use in production!
     ports:
       - 5001:5001
     entrypoint:
       ["flask", "run", "-p", "5001", "-h", "0.0.0.0", "--debugger"]
     restart: "no"
+    depends_on:
+      - mongodb
   mongodb:
     image: mongo:latest
-    container_name: 'xmap-local-mongo-container'
-    environment:
-      MONGO_INITDB_ROOT_USERNAME: admin
-      MONGO_INITDB_ROOT_PASSWORD: secret
+    container_name: "mongodb"
     volumes:
       - ~/data/mongo/db:/data/db
       - ~/data/mongo/log:/var/log/mongodb
     ports:
       - 27017:27017
-networks:
-    app:
-        driver: bridge
+    restart: always
+
+networks: 
+  default:
+    name: flask
