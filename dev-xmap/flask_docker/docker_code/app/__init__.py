@@ -1,13 +1,19 @@
 import os 
 import json
 import datetime
-import logging 
 from bson.objectid import ObjectId
 from flask import Flask
-from flask_bcrypt import Bcrypt
-# Set up extensiosn 
+from flask import url_for
 from app.models import db as mongo_db 
+from app.models import app_bcrypt
+from app.views import app_jwt
+from app.views import app_mail
+from app.views.api import api_blueprint
+from app.views.user import api_user_blueprint
 from app.config import config 
+from app.logger import logger
+
+LOG = logger.get_root_logger(__name__)
 
 class JSONEncoder(json.JSONEncoder):
     ''' extend json-encoder class'''
@@ -23,14 +29,21 @@ class JSONEncoder(json.JSONEncoder):
 
 def create_app(config_name):
     """Create a new app instances"""
-    logging.basicConfig(format='%(asctime)s %(levelname)s %(message)s')
-    logging.getLogger("flask").setLevel(logging.DEBUG)
     app_created = Flask(__name__)
     app_created.config.from_object(config[config_name])
     config[config_name].init_app(app_created)
     app_created.json_encoder = JSONEncoder
+    
     ## Init Extensions 
     mongo_db.init_app(app_created)
+    app_bcrypt.init_app(app_created)
+    app_jwt.init_app(app_created)
+    app_mail.init_app(app_created)
+    
+    ## Register API Blueprints 
+    api_blueprint.register_blueprint(api_user_blueprint)
+    app_created.register_blueprint(api_blueprint)
+    LOG.info('register endpoint in %s',app_created.url_map)
 
     return app_created
 
@@ -39,4 +52,4 @@ if os.environ.get('APP_ENV') != 'production':
 else:
     application = create_app('PRD')
 
-bcrypt = Bcrypt(application)
+

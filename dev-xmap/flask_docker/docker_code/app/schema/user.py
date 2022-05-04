@@ -24,9 +24,30 @@ user_schema = {
     "additionalProperties": False
 }
 
-def validate_user(data):
+reset_password_schema ={
+    "type":"object",
+    "properties":{
+        "email":{
+            "type":"string",
+            "format":"email"
+        }
+    },
+    "required":["email"],
+    "additionalProperties": False
+}
+
+def validate_user_form(data):
     try:
         validate(data, user_schema)
+    except ValidationError as e:
+        return {'ok': False, 'message': e}
+    except SchemaError as e:
+        return {'ok': False, 'message': e}
+    return {'ok': True, 'data': data}
+
+def validate_reset_password_form(data):
+    try:
+        validate(data, reset_password_schema)
     except ValidationError as e:
         return {'ok': False, 'message': e}
     except SchemaError as e:
