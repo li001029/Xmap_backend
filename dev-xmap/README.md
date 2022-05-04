@@ -4,7 +4,10 @@ We use docker container to standardise everything (versions/libraries). In one w
 ## Quick Start 
 1. In terminal, run the above command to do some cleaning. 
 ```shell
-docker volume rm $(docker volume ls -f dangling=true -q)
+## Delete all containers using the following command
+docker rm -f $(docker ps -a -q)
+## Delete all volumes using the following command
+docker volume rm $(docker volume ls -q)
 ```
 2. To build, create and run the container, run the following command and this will take miniutes to finish
 ```shell
