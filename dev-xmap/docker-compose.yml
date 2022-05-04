@@ -15,6 +15,11 @@ services:
       APP_PORT: 5001
       # DB_URL: "mongodb+srv://admin:xmap-secret@cluster0.wddj4.mongodb.net/xmapdb?retryWrites=true&w=majority"
       DB_URL: "mongodb://mongodb:27017/xmapdb"
+      # Set up email server
+      MAIL_SERVER: 'smtp.gmail.com'
+      MAIL_PORT: 465
+      EMAIL_USER: "xmap.developer@gmail.com"
+      EMAIL_PASSWORD: "xmap-secret"
       SECRET: "xmap-secret" #testing only - don't use in production!
     ports:
       - 5001:5001

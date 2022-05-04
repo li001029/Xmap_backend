@@ -26,6 +26,13 @@ class BasicConfig(object):
 # SERVER_NAME enables URL generation without a request context but with an application context.
 class DevConfig(BasicConfig):
     TESTING = True 
+    MAIL_SUPPRESS_SEND = False # testing email 
+    MAIL_SERVER = "smtp.gmail.com"
+    MAIL_PORT = 587
+    MAIL_USE_TLS = True
+    MAIL_USERNAME = os.environ.get('EMAIL_USER')
+    MAIL_PASSWORD = os.environ.get('EMAIL_PASSWORD')
+    
 
 class PrdConfig(BasicConfig):
     TESTING = False
