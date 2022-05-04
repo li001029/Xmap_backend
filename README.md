@@ -1,4 +1,4 @@
-# X-Map-Backend
+# X-Map-API
 
 X-Map is a simplied trail finding app built with Flask and is integrated wit third-api such as Azure Map 
 
