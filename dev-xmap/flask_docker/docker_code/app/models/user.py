@@ -38,7 +38,7 @@ class User(db.Document):
                 the unhashed user email 
 
             save (bool, optional):
-                Whether or not to save the field and update ``comments_m2m``.
+                Whether or not to save the field
 
                 If ``False``, the caller is responsible for performing the
                 save.
