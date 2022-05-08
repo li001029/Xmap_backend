@@ -2,6 +2,9 @@ from datetime import datetime
 import mongoengine
 from app.models import db 
 from app.models.user import User
+from app.logger import logger
+
+LOG = logger.get_root_logger(__name__)
 
 class Review(db.Document):
     author = db.ReferenceField(User,reverse_delete_rule= mongoengine.CASCADE,required=True)
@@ -49,7 +52,7 @@ class Review(db.Document):
             'author': kwargs.get('user'),
             'rating': kwargs.get('rating'),
             'park': kwargs.get('park_id'),
-            'activity_date': datetime.strptime(kwargs.get('activity_date'), '%Y-%M-%d') 
+            'activity_date': datetime.strptime(kwargs.get('activity_date'), '%Y-%m-%d') 
         }
         fields = ['activity_type','tags','comment']
         for field in fields:

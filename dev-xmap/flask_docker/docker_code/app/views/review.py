@@ -2,6 +2,7 @@ from bson import ObjectId
 from flask import (
     jsonify, request, Blueprint
 )
+from datetime import datetime 
 from flask_jwt_extended import (
     jwt_required, get_current_user
 )
@@ -84,6 +85,7 @@ def review():
         
         data = data['data']
         data['user'] = current_user
-        new_review = Review.create(**data) 
+        new_review = Review.create(**data)
+        LOG.debug(new_review.to_mongo())
         return jsonify({'ok':True, 'data': new_review.to_mongo(), 'message': 'Review created successfully!'}), 200 
 
